@@ -1,0 +1,45 @@
+/* login.css - estilos específicos para a tela de login */
+
+body {
+    background: linear-gradient(180deg, #ffffff 0%, #f7f7f8 100%);
+}
+
+.card {
+    border-radius: 1rem;
+}
+
+.display-logo i {
+    background: var(--sos-red);
+    color: #fff;
+    padding: 12px;
+    border-radius: 12px;
+}
+
+/* inputs rounded and larger */
+.form-control {
+    border-radius: 50px;
+    padding: 14px 20px;
+    box-shadow: none;
+}
+.form-control:focus {
+    box-shadow: 0 0 0 0.2rem rgba(230,57,70,0.12);
+    border-color: var(--sos-red);
+}
+
+.btn-danger {
+    background-color: var(--sos-red);
+    border-color: var(--sos-red);
+    box-shadow: 0 2px 8px rgba(230, 57, 70, 0.3) !important;
+}
+.btn-danger:hover, .btn-danger:focus {
+    background-color: #cf2f3a;
+    border-color: #cf2f3a;
+    box-shadow: 0 4px 12px rgba(230, 57, 70, 0.4) !important;
+}
+
+.rounded-4 { border-radius: 1rem !important; }
+
+@media (max-width: 576px) {
+    .card-body { padding: 1.25rem !important; }
+    .form-control { font-size: 0.95rem; }
+}

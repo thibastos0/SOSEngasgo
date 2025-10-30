@@ -1,0 +1,13 @@
+/* welcome.css - estilos específicos para a página de boas-vindas */
+.welcome-hero {
+    padding: 4.5rem 1rem;
+    text-align: center;
+}
+.welcome-hero .display-5 { font-weight: 700; }
+.welcome-hero .lead { max-width: 60ch; margin: .75rem auto 1.5rem; color: var(--muted); }
+.welcome-hero .btn{ min-width: 160px }
+
+@media (max-width: 576px) {
+    .welcome-hero { padding: 3rem 1rem; }
+    .welcome-hero .display-5 { font-size: 1.5rem; }
+}
