@@ -60,6 +60,13 @@
 			<groupId>org.webjars</groupId>
   			<artifactId>webjars-locator-core</artifactId>
 		</dependency>
+
+		<dependency>
+		    <groupId>io.github.cdimascio</groupId>
+    		<artifactId>java-dotenv</artifactId>
+    		<version>5.2.2</version>
+		</dependency>
+
 		<!-- Bootstrap (estrutura e estilo base) -->
 		<dependency>
 			<groupId>org.webjars</groupId>
