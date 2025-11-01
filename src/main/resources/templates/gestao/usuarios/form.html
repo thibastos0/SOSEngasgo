@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cadastrar/Editar Usuário - Gestão</title>
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/webjars/font-awesome/css/all.min.css}" rel="stylesheet">
+    <link th:href="@{/css/styles.css}" rel="stylesheet">
+    <link th:href="@{/css/gestao.css}" rel="stylesheet">
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-danger shadow-sm">
+    <div class="container-fluid px-4">
+        <a class="navbar-brand d-flex align-items-center" th:href="@{/gestao/dashboard}">
+            <i class="fa-solid fa-plus me-2"></i>
+            <span class="fw-bold">SOS Engasgo - Gestão</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                        <i class="fa-solid fa-user-circle me-1"></i>
+                        <span>Admin</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" th:href="@{/gestao/perfil}"><i class="fa-solid fa-user me-2"></i>Meu Perfil</a></li>
+                        <li><a class="dropdown-item" th:href="@{/gestao/configuracoes}"><i class="fa-solid fa-cog me-2"></i>Configurações</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" th:href="@{/logout}"><i class="fa-solid fa-sign-out-alt me-2"></i>Sair</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse" id="sidebarMenu">
+            <div class="position-sticky pt-3">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/gestao/dashboard}">
+                            <i class="fa-solid fa-chart-line me-2"></i>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" th:href="@{/gestao/usuarios}">
+                            <i class="fa-solid fa-users me-2"></i>
+                            Usuários
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/gestao/relatorios}">
+                            <i class="fa-solid fa-file-alt me-2"></i>
+                            Relatórios
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/gestao/alertas}">
+                            <i class="fa-solid fa-bell me-2"></i>
+                            Alertas
+                        </a>
+                    </li>
+                </ul>
+                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                    <span>Administração</span>
+                </h6>
+                <ul class="nav flex-column mb-2">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/gestao/instituicao}">
+                            <i class="fa-solid fa-building me-2"></i>
+                            Instituição
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/gestao/auditoria}">
+                            <i class="fa-solid fa-history me-2"></i>
+                            Auditoria
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Main content -->
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <div class="pt-3 pb-2 mb-3 border-bottom d-flex justify-content-between align-items-center">
+                <h2 class="h4 mb-0">Cadastrar/Editar Usuário</h2>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-10 col-md-12">
+                    <div class="card shadow border-0" style="background: #fff;">
+                        <div class="card-body p-4">
+                            <form th:action="@{/gestao/usuarios/salvar}" method="post" autocomplete="off">
+                                <!-- Mensagens de erro/sucesso -->
+                                <div th:if="${erro}" class="alert alert-danger" th:text="${erro}"></div>
+                                <div th:if="${sucesso}" class="alert alert-success" th:text="${sucesso}"></div>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label for="nome" class="form-label">Nome</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-light"><i class="fa fa-user"></i></span>
+                                            <input type="text" class="form-control" id="nome" name="nome" th:value="${usuario?.nome}" required maxlength="100">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="email" class="form-label">Email</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-light"><i class="fa fa-envelope"></i></span>
+                                            <input type="email" class="form-control" id="email" name="email" th:value="${usuario?.email}" required maxlength="100">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="perfil" class="form-label">Perfil</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-light"><i class="fa fa-id-badge"></i></span>
+                                            <select class="form-select" id="perfil" name="perfil" required>
+                                                <option th:selected="${usuario?.perfil == null}" value="">Selecione...</option>
+                                                <option th:selected="${usuario?.perfil == 'GESTOR'}" value="GESTOR">Gestor</option>
+                                                <option th:selected="${usuario?.perfil == 'USUARIO'}" value="USUARIO">Usuário</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="status" class="form-label">Status</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-light"><i class="fa fa-toggle-on"></i></span>
+                                            <select class="form-select" id="status" name="status" required>
+                                                <option th:selected="${usuario?.status == null}" value="">Selecione...</option>
+                                                <option th:selected="${usuario?.status == 'ATIVO'}" value="ATIVO">Ativo</option>
+                                                <option th:selected="${usuario?.status == 'INATIVO'}" value="INATIVO">Inativo</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="senha" class="form-label">Senha</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-light"><i class="fa fa-lock"></i></span>
+                                            <input type="password" class="form-control" id="senha" name="senha" th:value="${usuario?.senha}" th:placeholder="${usuario?.id != null ? 'Deixe em branco para não alterar' : ''}" th:required="${usuario?.id == null}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-end mt-4 gap-2">
+                                    <a th:href="@{/gestao/usuarios}" class="btn btn-outline-secondary px-4">Cancelar</a>
+                                    <button type="submit" class="btn btn-success px-5 shadow-sm" style="font-weight: 600; font-size: 1.1rem;">
+                                        <i class="fa fa-save me-2"></i>Salvar
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/@popperjs/core/dist/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

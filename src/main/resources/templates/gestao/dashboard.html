@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Painel de Gestão - SOSEngasgo</title>
+
+    <!-- Bootstrap -->
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link th:href="@{/webjars/font-awesome/css/all.min.css}" rel="stylesheet">
+    <!-- Project CSS -->
+    <link th:href="@{/css/styles.css}" rel="stylesheet">
+    <link th:href="@{/css/gestao.css}" rel="stylesheet">
+</head>
+<body>
+
+<!-- Navbar superior -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-danger shadow-sm">
+    <div class="container-fluid px-4">
+        <a class="navbar-brand d-flex align-items-center" th:href="@{/gestao/dashboard}">
+            <i class="fa-solid fa-plus me-2"></i>
+            <span class="fw-bold">SOS Engasgo - Gestão</span>
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                        <i class="fa-solid fa-user-circle me-1"></i>
+                        <span>Admin</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" th:href="@{/gestao/perfil}"><i class="fa-solid fa-user me-2"></i>Meu Perfil</a></li>
+                        <li><a class="dropdown-item" th:href="@{/gestao/configuracoes}"><i class="fa-solid fa-cog me-2"></i>Configurações</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" th:href="@{/logout}"><i class="fa-solid fa-sign-out-alt me-2"></i>Sair</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse" id="sidebarMenu">
+            <div class="position-sticky pt-3">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" th:href="@{/gestao/dashboard}">
+                            <i class="fa-solid fa-chart-line me-2"></i>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/gestao/usuarios}">
+                            <i class="fa-solid fa-users me-2"></i>
+                            Usuários
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/gestao/relatorios}">
+                            <i class="fa-solid fa-file-alt me-2"></i>
+                            Relatórios
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/gestao/alertas}">
+                            <i class="fa-solid fa-bell me-2"></i>
+                            Alertas
+                        </a>
+                    </li>
+                </ul>
+
+                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                    <span>Administração</span>
+                </h6>
+                <ul class="nav flex-column mb-2">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/gestao/instituicao}">
+                            <i class="fa-solid fa-building me-2"></i>
+                            Instituição
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/gestao/auditoria}">
+                            <i class="fa-solid fa-history me-2"></i>
+                            Auditoria
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Main content -->
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">Painel Geral</h1>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <button type="button" class="btn btn-sm btn-outline-secondary">
+                        <i class="fa-solid fa-download me-1"></i>
+                        Exportar
+                    </button>
+                </div>
+            </div>
+
+            <!-- Cards de estatísticas -->
+            <div class="row mb-4">
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-primary shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs fw-bold text-primary text-uppercase mb-1">
+                                        Usuários Ativos
+                                    </div>
+                                    <div class="h5 mb-0 fw-bold text-gray-800">248</div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fa-solid fa-users fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-success shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs fw-bold text-success text-uppercase mb-1">
+                                        Alertas (Este Mês)
+                                    </div>
+                                    <div class="h5 mb-0 fw-bold text-gray-800">12</div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fa-solid fa-bell fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-info shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs fw-bold text-info text-uppercase mb-1">
+                                        Taxa de Resposta
+                                    </div>
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col-auto">
+                                            <div class="h5 mb-0 mr-3 fw-bold text-gray-800">95%</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fa-solid fa-clipboard-check fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-warning shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs fw-bold text-warning text-uppercase mb-1">
+                                        Pendências
+                                    </div>
+                                    <div class="h5 mb-0 fw-bold text-gray-800">3</div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fa-solid fa-exclamation-triangle fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ações rápidas -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="card shadow">
+                        <div class="card-header bg-white py-3">
+                            <h6 class="m-0 fw-bold text-primary">Ações Rápidas</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="row text-center">
+                                <div class="col-md-3 mb-3">
+                                    <a th:href="@{/gestao/usuarios/novo}" class="btn btn-outline-primary btn-action">
+                                        <i class="fa-solid fa-user-plus fa-2x mb-2"></i>
+                                        <p class="mb-0">Cadastrar Usuário</p>
+                                    </a>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <a th:href="@{/gestao/relatorios/gerar}" class="btn btn-outline-success btn-action">
+                                        <i class="fa-solid fa-chart-bar fa-2x mb-2"></i>
+                                        <p class="mb-0">Gerar Relatório</p>
+                                    </a>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <a th:href="@{/gestao/alertas/historico}" class="btn btn-outline-danger btn-action">
+                                        <i class="fa-solid fa-history fa-2x mb-2"></i>
+                                        <p class="mb-0">Ver Histórico</p>
+                                    </a>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <a th:href="@{/gestao/configuracoes}" class="btn btn-outline-secondary btn-action">
+                                        <i class="fa-solid fa-cog fa-2x mb-2"></i>
+                                        <p class="mb-0">Configurações</p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabela de atividades recentes -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card shadow mb-4">
+                        <div class="card-header bg-white py-3">
+                            <h6 class="m-0 fw-bold text-primary">Atividades Recentes</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Data/Hora</th>
+                                            <th>Usuário</th>
+                                            <th>Ação</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>01/11/2025 09:45</td>
+                                            <td>João Silva</td>
+                                            <td>Alerta de emergência acionado</td>
+                                            <td><span class="badge bg-success">Resolvido</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>01/11/2025 09:30</td>
+                                            <td>Maria Santos</td>
+                                            <td>Login no sistema</td>
+                                            <td><span class="badge bg-info">Completo</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>01/11/2025 09:15</td>
+                                            <td>Admin</td>
+                                            <td>Novo usuário cadastrado</td>
+                                            <td><span class="badge bg-success">Completo</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>01/11/2025 08:50</td>
+                                            <td>Pedro Costa</td>
+                                            <td>Alerta de emergência acionado</td>
+                                            <td><span class="badge bg-warning">Pendente</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<!-- JS -->
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/@popperjs/core/dist/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+</body>
+</html>

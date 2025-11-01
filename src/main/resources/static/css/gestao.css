@@ -1,0 +1,125 @@
+/* gestao.css - estilos específicos para o módulo de gestão */
+
+/* Sidebar */
+.sidebar {
+    position: sticky;
+    top: 0;
+    height: calc(100vh - 56px);
+    padding-top: .5rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+    border-right: 1px solid #dee2e6;
+}
+
+.sidebar .nav-link {
+    font-weight: 500;
+    color: #333;
+    padding: .75rem 1rem;
+    border-radius: 0.25rem;
+    margin: 0.25rem 0.5rem;
+}
+
+.sidebar .nav-link:hover {
+    background-color: #f8f9fa;
+    color: var(--sos-red);
+}
+
+.sidebar .nav-link.active {
+    background-color: var(--sos-red);
+    color: white;
+}
+
+.sidebar .nav-link i {
+    width: 20px;
+}
+
+.sidebar-heading {
+    font-size: .75rem;
+    text-transform: uppercase;
+}
+
+/* Cards de estatísticas */
+.card {
+    border: none;
+}
+
+.border-left-primary {
+    border-left: 4px solid #4e73df !important;
+}
+
+.border-left-success {
+    border-left: 4px solid #1cc88a !important;
+}
+
+.border-left-info {
+    border-left: 4px solid #36b9cc !important;
+}
+
+.border-left-warning {
+    border-left: 4px solid #f6c23e !important;
+}
+
+.text-xs {
+    font-size: 0.7rem;
+    font-weight: 700;
+}
+
+.text-gray-300 {
+    color: #dddfeb !important;
+}
+
+.text-gray-800 {
+    color: #5a5c69 !important;
+}
+
+/* Botões de ação */
+.btn-action {
+    width: 100%;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed #dee2e6;
+    transition: all 0.3s ease;
+}
+
+.btn-action:hover {
+    border-style: solid;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.btn-action i {
+    display: block;
+}
+
+/* Navbar superior gestão */
+.navbar-dark .navbar-brand {
+    color: white;
+}
+
+/* Tabela responsiva */
+.table-responsive {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .sidebar {
+        position: relative;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid #dee2e6;
+    }
+    
+    .btn-action {
+        padding: 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .btn-action i {
+        font-size: 1.5rem !important;
+    }
+}

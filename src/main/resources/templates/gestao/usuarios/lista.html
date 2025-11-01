@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Usuários - Gestão</title>
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/webjars/font-awesome/css/all.min.css}" rel="stylesheet">
+    <link th:href="@{/css/styles.css}" rel="stylesheet">
+    <link th:href="@{/css/gestao.css}" rel="stylesheet">
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-danger shadow-sm">
+    <div class="container-fluid px-4">
+        <a class="navbar-brand d-flex align-items-center" th:href="@{/gestao/dashboard}">
+            <i class="fa-solid fa-plus me-2"></i>
+            <span class="fw-bold">SOS Engasgo - Gestão</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                        <i class="fa-solid fa-user-circle me-1"></i>
+                        <span>Admin</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" th:href="@{/gestao/perfil}"><i class="fa-solid fa-user me-2"></i>Meu Perfil</a></li>
+                        <li><a class="dropdown-item" th:href="@{/gestao/configuracoes}"><i class="fa-solid fa-cog me-2"></i>Configurações</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" th:href="@{/logout}"><i class="fa-solid fa-sign-out-alt me-2"></i>Sair</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse" id="sidebarMenu">
+            <div class="position-sticky pt-3">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/gestao/dashboard}">
+                            <i class="fa-solid fa-chart-line me-2"></i>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" th:href="@{/gestao/usuarios}">
+                            <i class="fa-solid fa-users me-2"></i>
+                            Usuários
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/gestao/relatorios}">
+                            <i class="fa-solid fa-file-alt me-2"></i>
+                            Relatórios
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/gestao/alertas}">
+                            <i class="fa-solid fa-bell me-2"></i>
+                            Alertas
+                        </a>
+                    </li>
+                </ul>
+                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                    <span>Administração</span>
+                </h6>
+                <ul class="nav flex-column mb-2">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/gestao/instituicao}">
+                            <i class="fa-solid fa-building me-2"></i>
+                            Instituição
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/gestao/auditoria}">
+                            <i class="fa-solid fa-history me-2"></i>
+                            Auditoria
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Main content -->
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <div class="pt-3 pb-2 mb-3 border-bottom d-flex justify-content-between align-items-center">
+                <h2 class="h4 mb-0">Usuários</h2>
+                <a th:href="@{/gestao/usuarios/novo}" class="btn btn-primary">
+                    <i class="fa fa-user-plus me-1"></i> Novo Usuário
+                </a>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <form class="d-flex" th:action="@{/gestao/usuarios}" method="get">
+                        <input class="form-control me-2" type="search" name="q" placeholder="Pesquisar usuário..." aria-label="Pesquisar">
+                        <button class="btn btn-outline-secondary" type="submit"><i class="fa fa-search"></i></button>
+                    </form>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>#</th>
+                            <th>Nome</th>
+                            <th>Email</th>
+                            <th>Perfil</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Exemplo de linha, substituir por iteração Thymeleaf -->
+                        <tr>
+                            <td>1</td>
+                            <td>João Silva</td>
+                            <td>joao@escola.com</td>
+                            <td>Gestor</td>
+                            <td><span class="badge bg-success">Ativo</span></td>
+                            <td>
+                                <a th:href="@{/gestao/usuarios/editar/1}" class="btn btn-sm btn-outline-primary me-1"><i class="fa fa-edit"></i></a>
+                                <a th:href="@{/gestao/usuarios/visualizar/1}" class="btn btn-sm btn-outline-info me-1"><i class="fa fa-eye"></i></a>
+                                <a th:href="@{/gestao/usuarios/remover/1}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Tem certeza que deseja remover?')"><i class="fa fa-trash"></i></a>
+                            </td>
+                        </tr>
+                        <!-- ... -->
+                    </tbody>
+                </table>
+            </div>
+            <!-- Paginação exemplo -->
+            <nav aria-label="Paginação de usuários">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item disabled"><a class="page-link" href="#">Anterior</a></li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#">Próximo</a></li>
+                </ul>
+            </nav>
+        </main>
+    </div>
+</div>
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/@popperjs/core/dist/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
