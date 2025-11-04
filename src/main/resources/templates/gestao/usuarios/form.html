@@ -95,61 +95,137 @@
             <div class="pt-3 pb-2 mb-3 border-bottom d-flex justify-content-between align-items-center">
                 <h2 class="h4 mb-0">Cadastrar/Editar Usuário</h2>
             </div>
+            
+            <!-- Alert container -->
+            <div id="alertContainer"></div>
+            
             <div class="row justify-content-center">
                 <div class="col-lg-10 col-md-12">
-                    <div class="card shadow border-0" style="background: #fff;">
+                    <div class="card shadow border-0">
                         <div class="card-body p-4">
-                            <form th:action="@{/gestao/usuarios/salvar}" method="post" autocomplete="off">
-                                <!-- Mensagens de erro/sucesso -->
-                                <div th:if="${erro}" class="alert alert-danger" th:text="${erro}"></div>
-                                <div th:if="${sucesso}" class="alert alert-success" th:text="${sucesso}"></div>
-                                <div class="row g-3">
+                            <form id="userForm" autocomplete="off" class="needs-validation" novalidate>
+                                <input type="hidden" id="userId" name="id">
+                                
+                                <!-- Informações Pessoais -->
+                                <h5 class="mb-3"><i class="fa fa-user me-2"></i>Informações Pessoais</h5>
+                                <div class="row g-3 mb-4">
                                     <div class="col-md-6">
-                                        <label for="nome" class="form-label">Nome</label>
+                                        <label for="nome" class="form-label">Nome Completo *</label>
                                         <div class="input-group">
                                             <span class="input-group-text bg-light"><i class="fa fa-user"></i></span>
-                                            <input type="text" class="form-control" id="nome" name="nome" th:value="${usuario?.nome}" required maxlength="100">
+                                            <input type="text" class="form-control" id="nome" name="nome" required maxlength="100">
+                                            <div class="invalid-feedback">Por favor, informe o nome.</div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <label for="email" class="form-label">Email</label>
-                                        <div class="input-group">
-                                            <span class="input-group-text bg-light"><i class="fa fa-envelope"></i></span>
-                                            <input type="email" class="form-control" id="email" name="email" th:value="${usuario?.email}" required maxlength="100">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="perfil" class="form-label">Perfil</label>
+                                        <label for="tipo" class="form-label">Tipo *</label>
                                         <div class="input-group">
                                             <span class="input-group-text bg-light"><i class="fa fa-id-badge"></i></span>
-                                            <select class="form-select" id="perfil" name="perfil" required>
-                                                <option th:selected="${usuario?.perfil == null}" value="">Selecione...</option>
-                                                <option th:selected="${usuario?.perfil == 'GESTOR'}" value="GESTOR">Gestor</option>
-                                                <option th:selected="${usuario?.perfil == 'USUARIO'}" value="USUARIO">Usuário</option>
+                                            <select class="form-select" id="tipo" name="tipo" required>
+                                                <option value="">Selecione...</option>
+                                                <option value="PROFESSOR">Professor</option>
+                                                <option value="COORDENADOR">Coordenador</option>
+                                                <option value="DIRETOR">Diretor</option>
+                                                <option value="ENFERMEIRO">Enfermeiro</option>
+                                                <option value="OUTRO">Outro</option>
                                             </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="status" class="form-label">Status</label>
-                                        <div class="input-group">
-                                            <span class="input-group-text bg-light"><i class="fa fa-toggle-on"></i></span>
-                                            <select class="form-select" id="status" name="status" required>
-                                                <option th:selected="${usuario?.status == null}" value="">Selecione...</option>
-                                                <option th:selected="${usuario?.status == 'ATIVO'}" value="ATIVO">Ativo</option>
-                                                <option th:selected="${usuario?.status == 'INATIVO'}" value="INATIVO">Inativo</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="senha" class="form-label">Senha</label>
-                                        <div class="input-group">
-                                            <span class="input-group-text bg-light"><i class="fa fa-lock"></i></span>
-                                            <input type="password" class="form-control" id="senha" name="senha" th:value="${usuario?.senha}" th:placeholder="${usuario?.id != null ? 'Deixe em branco para não alterar' : ''}" th:required="${usuario?.id == null}">
+                                            <div class="invalid-feedback">Por favor, selecione o tipo.</div>
                                         </div>
                                     </div>
                                 </div>
+
+                                <!-- Contato -->
+                                <h5 class="mb-3"><i class="fa fa-envelope me-2"></i>Contato</h5>
+                                <div class="row g-3 mb-4">
+                                    <div class="col-md-6">
+                                        <label for="email" class="form-label">Email *</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-light"><i class="fa fa-envelope"></i></span>
+                                            <input type="email" class="form-control" id="email" name="email" required maxlength="100">
+                                            <div class="invalid-feedback">Por favor, informe um email válido.</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="telefone" class="form-label">Telefone</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-light"><i class="fa fa-phone"></i></span>
+                                            <input type="tel" class="form-control" id="telefone" name="telefone" placeholder="(00) 00000-0000" maxlength="15">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Perfil e Acesso -->
+                                <h5 class="mb-3"><i class="fa fa-cog me-2"></i>Perfil e Acesso</h5>
+                                <div class="row g-3 mb-4">
+                                    <div class="col-md-6">
+                                        <label for="perfilAcesso" class="form-label">Perfil de Acesso *</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-light"><i class="fa fa-shield-alt"></i></span>
+                                            <select class="form-select" id="perfilAcesso" name="perfilAcesso" required>
+                                                <option value="">Selecione...</option>
+                                                <option value="ADMIN">Administrador</option>
+                                                <option value="GESTOR">Gestor</option>
+                                                <option value="USUARIO">Usuário</option>
+                                            </select>
+                                            <div class="invalid-feedback">Por favor, selecione o perfil de acesso.</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="senha" class="form-label">Senha <span id="senhaOptional" style="display:none;">(deixe em branco para não alterar)</span></label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-light"><i class="fa fa-lock"></i></span>
+                                            <input type="password" class="form-control" id="senha" name="senha" minlength="6">
+                                            <button class="btn btn-outline-secondary" type="button" onclick="togglePassword()">
+                                                <i class="fa fa-eye" id="toggleIcon"></i>
+                                            </button>
+                                            <div class="invalid-feedback">A senha deve ter no mínimo 6 caracteres.</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Informações Adicionais -->
+                                <h5 class="mb-3"><i class="fa fa-info-circle me-2"></i>Informações Adicionais</h5>
+                                <div class="row g-3 mb-4">
+                                    <div class="col-md-6">
+                                        <label for="faixaEtariaAtendimento" class="form-label">Faixa Etária de Atendimento</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-light"><i class="fa fa-child"></i></span>
+                                            <select class="form-select" id="faixaEtariaAtendimento" name="faixaEtariaAtendimento">
+                                                <option value="">Selecione...</option>
+                                                <option value="INFANTIL">Infantil (0-5 anos)</option>
+                                                <option value="FUNDAMENTAL_1">Fundamental I (6-10 anos)</option>
+                                                <option value="FUNDAMENTAL_2">Fundamental II (11-14 anos)</option>
+                                                <option value="MEDIO">Ensino Médio (15-17 anos)</option>
+                                                <option value="TODAS">Todas as faixas</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="escolaId" class="form-label">ID da Escola</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-light"><i class="fa fa-school"></i></span>
+                                            <input type="text" class="form-control" id="escolaId" name="escolaId" placeholder="ID da escola vinculada">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Capacitação -->
+                                <div class="row g-3 mb-4">
+                                    <div class="col-12">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="capacitadoLeiLucas" name="capacitadoLeiLucas">
+                                            <label class="form-check-label" for="capacitadoLeiLucas">
+                                                <i class="fa fa-graduation-cap me-2"></i>Capacitado pela Lei Lucas
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Botões -->
                                 <div class="d-flex justify-content-end mt-4 gap-2">
-                                    <a th:href="@{/gestao/usuarios}" class="btn btn-outline-secondary px-4">Cancelar</a>
+                                    <a th:href="@{/gestao/usuarios}" class="btn btn-outline-secondary px-4">
+                                        <i class="fa fa-times me-2"></i>Cancelar
+                                    </a>
                                     <button type="submit" class="btn btn-success px-5 shadow-sm" style="font-weight: 600; font-size: 1.1rem;">
                                         <i class="fa fa-save me-2"></i>Salvar
                                     </button>
@@ -165,5 +241,21 @@
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/@popperjs/core/dist/umd/popper.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/js/usuario.js}"></script>
+<script>
+function togglePassword() {
+    const senhaInput = document.getElementById('senha');
+    const toggleIcon = document.getElementById('toggleIcon');
+    if (senhaInput.type === 'password') {
+        senhaInput.type = 'text';
+        toggleIcon.classList.remove('fa-eye');
+        toggleIcon.classList.add('fa-eye-slash');
+    } else {
+        senhaInput.type = 'password';
+        toggleIcon.classList.remove('fa-eye-slash');
+        toggleIcon.classList.add('fa-eye');
+    }
+}
+</script>
 </body>
 </html>

@@ -98,59 +98,48 @@
                     <i class="fa fa-user-plus me-1"></i> Novo Usuário
                 </a>
             </div>
+            
+            <!-- Alert container para mensagens -->
+            <div id="alertContainer"></div>
+            
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <form class="d-flex" th:action="@{/gestao/usuarios}" method="get">
-                        <input class="form-control me-2" type="search" name="q" placeholder="Pesquisar usuário..." aria-label="Pesquisar">
-                        <button class="btn btn-outline-secondary" type="submit"><i class="fa fa-search"></i></button>
-                    </form>
+                    <div class="input-group">
+                        <input class="form-control" type="search" id="searchInput" placeholder="Pesquisar por nome, email ou tipo..." aria-label="Pesquisar">
+                        <button class="btn btn-outline-secondary" type="button" onclick="filtrarUsuarios()"><i class="fa fa-search"></i></button>
+                    </div>
                 </div>
             </div>
-            <div class="table-responsive">
+            
+            <div class="table-responsive table-container">
                 <table class="table table-hover align-middle">
                     <thead class="table-light">
                         <tr>
-                            <th>#</th>
                             <th>Nome</th>
                             <th>Email</th>
-                            <th>Perfil</th>
-                            <th>Status</th>
-                            <th>Ações</th>
+                            <th>Tipo</th>
+                            <th>Perfil Acesso</th>
+                            <th>Capacitado</th>
+                            <th class="text-center">Ações</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <!-- Exemplo de linha, substituir por iteração Thymeleaf -->
+                    <tbody id="userTable">
                         <tr>
-                            <td>1</td>
-                            <td>João Silva</td>
-                            <td>joao@escola.com</td>
-                            <td>Gestor</td>
-                            <td><span class="badge bg-success">Ativo</span></td>
-                            <td>
-                                <a th:href="@{/gestao/usuarios/editar/1}" class="btn btn-sm btn-outline-primary me-1"><i class="fa fa-edit"></i></a>
-                                <a th:href="@{/gestao/usuarios/visualizar/1}" class="btn btn-sm btn-outline-info me-1"><i class="fa fa-eye"></i></a>
-                                <a th:href="@{/gestao/usuarios/remover/1}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Tem certeza que deseja remover?')"><i class="fa fa-trash"></i></a>
+                            <td colspan="6" class="text-center">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Carregando...</span>
+                                </div>
                             </td>
                         </tr>
-                        <!-- ... -->
                     </tbody>
                 </table>
             </div>
-            <!-- Paginação exemplo -->
-            <nav aria-label="Paginação de usuários">
-                <ul class="pagination justify-content-center">
-                    <li class="page-item disabled"><a class="page-link" href="#">Anterior</a></li>
-                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">Próximo</a></li>
-                </ul>
-            </nav>
         </main>
     </div>
 </div>
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/@popperjs/core/dist/umd/popper.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/js/usuario.js}"></script>
 </body>
 </html>

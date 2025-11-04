@@ -15,13 +15,16 @@ public class GestaoController {
 
     @GetMapping("/usuarios")
     public String usuarios() {
-        // Redireciona para lista de usuários (a criar)
         return "gestao/usuarios/lista";
     }
 
     @GetMapping("/usuarios/novo")
     public String novoUsuario() {
-        // Formulário de novo usuário (a criar)
+        return "gestao/usuarios/form";
+    }
+
+    @GetMapping("/usuarios/editar/{id}")
+    public String editarUsuario() {
         return "gestao/usuarios/form";
     }
 
