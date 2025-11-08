@@ -2,6 +2,7 @@ package com.example.SOSEngasgo.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Document(collection="usuario")
 public class Usuario {
@@ -18,6 +19,7 @@ public class Usuario {
 
     private ContatoUsuario contatoUsuario;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String senha;
 
     public String getId() {

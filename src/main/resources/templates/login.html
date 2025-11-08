@@ -57,7 +57,8 @@
                             <p class="text-muted small">Entre com sua conta para continuar</p>
                         </div>
 
-                        <form th:action="@{/login}" method="post">
+                        <!-- <form th:action="@{/login}" method="post"> -->
+                        <form onsubmit="Autenticar(event)">
                             <!-- Mostrar mensagens de erro/sucesso vindas de parâmetros (ex: ?error, ?logout) -->
                             <div th:if="${param.error}" class="alert alert-danger" role="alert">
                                 Usuário ou senha inválidos. Verifique e tente novamente.
@@ -86,12 +87,15 @@
                                 <a th:href="@{/forgot}" class="small">Esqueceu a senha?</a>
                             </div>
 
-                            <div class="d-grid mb-3">
-                                <a th:href="@{/gestao/dashboard}" class="btn btn-danger btn-lg rounded-pill">Entrar</a>
+                            <div class="d-grid mb-2">
                                 <!--
-                                <button type="submit" class="btn btn-danger btn-lg rounded-pill">Entrar</button>
+                                <a th:href="@{/gestao/dashboard}" class="btn btn-danger btn-lg rounded-pill">Entrar</a>
                                 -->
+                                <button type="submit" class="btn btn-danger btn-lg rounded-pill">Entrar</button>
                             </div>
+
+                            <!-- Área para mensagens de erro/sucesso do JS -->
+                            <div id="erro" class="small text-center"></div>
 
                             <div class="text-center">
                                 <small class="text-muted">Ainda não tem conta? <a th:href="@{/signup}">Criar cadastro</a></small>
@@ -106,8 +110,9 @@
 
 <!-- JS -->
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-<script th:src="@{/webjars/@popperjs/core/dist/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/popperjs__core/dist/umd/popper.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/js/autenticar.js}"></script>
 
 </body>
 </html>

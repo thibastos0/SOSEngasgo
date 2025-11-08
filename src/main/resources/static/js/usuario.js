@@ -218,24 +218,37 @@ class UserManager {
         const pathParts = window.location.pathname.split('/');
         const editIndex = pathParts.indexOf('editar');
         
+        console.log('🔍 Carregando usuário para edição...');
+        console.log('Path parts:', pathParts);
+        console.log('Edit index:', editIndex);
+        
         if (editIndex === -1 || !pathParts[editIndex + 1]) return;
         
         const userId = pathParts[editIndex + 1];
+        console.log('📋 ID do usuário:', userId);
         
         try {
-            const response = await fetch(`${this.apiUrl}/${userId}`);
+            const url = `${this.apiUrl}/${userId}`;
+            console.log('🌐 Fazendo requisição para:', url);
+            
+            const response = await fetch(url);
+            console.log('📥 Response status:', response.status);
+            
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
             
             const usuario = await response.json();
+            console.log('✅ Usuário carregado:', usuario);
+            
             this.preencherFormulario(usuario);
             
         } catch (error) {
-            console.error("Erro ao carregar usuário:", error);
+            console.error("❌ Erro ao carregar usuário:", error);
             this.showAlert("Erro ao carregar dados do usuário.", "error");
         }
     }
 
     preencherFormulario(usuario) {
+        console.log('📝 Preenchendo formulário com:', usuario);
         document.getElementById('userId').value = usuario.id || '';
         document.getElementById('nome').value = usuario.nome || '';
         document.getElementById('tipo').value = usuario.tipo || '';
