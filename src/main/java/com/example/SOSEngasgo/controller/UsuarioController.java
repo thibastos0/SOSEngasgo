@@ -1,13 +1,17 @@
 package com.example.SOSEngasgo.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+//import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.SOSEngasgo.model.Usuario;
 import com.example.SOSEngasgo.service.UsuarioService;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @RequestMapping("/gestao/usuarios")
@@ -20,13 +24,18 @@ public class UsuarioController {
     public List<Usuario> listarTodos() {
         return usuarioService.listarTodos();
     }
-
+    /*
     @GetMapping("/{id}")
     public ResponseEntity<Usuario> buscarPorId(@PathVariable String id) {
         return usuarioService.buscarPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }*/
+    @GetMapping("/{id}")
+    public Optional<Usuario> buscarPorId(@PathVariable String id) {
+        return usuarioService.buscarPorId(id);
     }
+    
 
     @PostMapping("/salvar")
     public Usuario criar(@RequestBody Usuario usuario) {
