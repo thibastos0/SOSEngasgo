@@ -1,6 +1,7 @@
 package com.example.SOSEngasgo.service;
 
-import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,15 +15,12 @@ public class AutenticaService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-
-    public Usuario autenticar(String email, String senha){
-        List<Usuario> usuarios = usuarioRepository.findAll();
-        return usuarios.stream()
+    public Optional<Usuario> autenticar(String email, String senha) {
+        return usuarioRepository.findAll().stream()
                 .filter(u -> u.getContatoUsuario() != null)
-                .filter(u -> email.equals(u.getContatoUsuario().getEmail()))
-                .filter(u -> senha != null && senha.equals(u.getSenha()))
-                .findFirst()
-                .orElse(null);
+                .filter(u -> Objects.equals(email, u.getContatoUsuario().getEmail()))
+                .filter(u -> Objects.equals(senha, u.getSenha()))
+                .findFirst();
     }
 
 }
