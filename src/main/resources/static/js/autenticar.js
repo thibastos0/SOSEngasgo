@@ -10,13 +10,15 @@ function Autenticar(event) {
       button.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Entrando...';
       button.disabled = true;
 
-      // Use caminho relativo para evitar problemas de porta/origem
+      // Login customizado via JSON (POST /autenticacao)
+      // CSRF não é necessário aqui pois /autenticacao/** está na lista de ignore do WebConfig
       fetch("/autenticacao", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
-        // O backend espera um Usuario com contatoUsuario.email e senha
+        credentials: 'same-origin', // ← CRÍTICO: aceita/envia cookies de sessão
+        // Estrutura esperada pelo LoginController
         body: JSON.stringify({ 
           contatoUsuario: { email: email }, 
           senha: senha 
@@ -24,22 +26,25 @@ function Autenticar(event) {
       })
       .then(res => {
         if (res.ok) {
+          // Autenticação bem-sucedida
           erro.innerHTML = '<i class="bi bi-check-circle-fill me-2"></i>Login realizado com sucesso!';
           erro.className = 'text-success small';
+          // Redirecionar para dashboard (SecurityContext já foi setado pelo backend)
           setTimeout(() => {
             window.location.href = '/gestao/dashboard';
-          }, 1000);
+          }, 500);
         } else {
+          // Falha na autenticação (401 ou outro erro)
           return res.text().then(texto => {
-            erro.innerHTML = '<i class="bi bi-exclamation-triangle-fill me-2"></i>' + texto;
+            erro.innerHTML = '<i class="bi bi-exclamation-triangle-fill me-2"></i>' + (texto || 'Usuário ou senha inválidos');
             erro.className = 'text-danger small';
           });
         }
       })
       .catch(err => {
-        erro.innerHTML = '<i class="bi bi-wifi-off me-2"></i>Erro de conexão.';
+        erro.innerHTML = '<i class="bi bi-wifi-off me-2"></i>Erro de conexão. Verifique sua rede.';
         erro.className = 'text-danger small';
-        console.error(err);
+        console.error('Erro na autenticação:', err);
       })
       .finally(() => {
         button.innerHTML = originalText;
