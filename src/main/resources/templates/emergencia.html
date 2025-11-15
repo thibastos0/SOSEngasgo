@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Acionamento de Emergência - SOSEngasgo</title>
+    
+    <!-- Bootstrap -->
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link th:href="@{/webjars/font-awesome/css/all.min.css}" rel="stylesheet">
+    <!-- Project CSS -->
+    <link th:href="@{/css/styles.css}" rel="stylesheet">
+    <link th:href="@{/css/emergencia.css}" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <!-- Emergency Container -->
+    <div class="emergency-container">
+        <div class="emergency-card">
+            <h1 class="emergency-title">
+                <i class="fa-solid fa-exclamation-triangle"></i>
+                Emergência
+            </h1>
+            <p class="emergency-subtitle">
+                Em caso de engasgo, pressione o botão abaixo imediatamente
+            </p>
+            
+            <button type="button" class="emergency-button mx-auto" id="emergencyBtn">
+                <i class="fa-solid fa-bell"></i>
+                <span>Acionar</span>
+            </button>
+            
+            <p class="info-text">
+                <i class="fa-solid fa-info-circle me-2"></i>
+                Ao acionar, todos os responsáveis da instituição serão notificados instantaneamente.
+            </p>
+        </div>
+    </div>
+
+    <!-- JS -->
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script th:src="@{/webjars/popperjs__core/dist/umd/popper.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/js/emergencia.js}"></script>
+</body>
+</html>

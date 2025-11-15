@@ -50,12 +50,35 @@ Principais pontos:
 | `/login`            | `permitAll()`             | Página de login (Thymeleaf)        |
 | `/autenticacao/**`  | `permitAll()`             | JSON login                         |
 | Recursos estáticos  | `permitAll()`             | CSS, JS, webjars                   |
-| `/gestao/**`        | `hasRole("GESTOR")`       | Gestão restrita                    |
+| `/emergencia`       | `authenticated()`         | Acionamento de emergência (todos)  |
+| `/gestao/**`        | `hasRole("GESTOR")`       | Gestão restrita a gestores         |
 | Demais              | `authenticated()`         | Requer qualquer usuário logado     |
 
 ## CSRF
 - Protegido em formulários (logout e CRUD). Cada template envia hidden input com `th:name="${_csrf.parameterName}"` e `th:value="${_csrf.token}"`.
 - Ignorado para `/autenticacao/**` para permitir login via fetch sem token prévio.
+
+### CSRF em AJAX (fetch)
+- Inclua o token CSRF em meta tags no `<head>` dos templates que disparam chamadas AJAX:
+
+```html
+<meta name="_csrf" th:content="${_csrf.token}"/>
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+```
+
+- Nas requisições fetch, envie o header esperado (por padrão `X-CSRF-TOKEN`):
+
+```js
+const token = document.querySelector('meta[name="_csrf"]').content;
+await fetch('/alguma/rota', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'X-CSRF-TOKEN': token
+  },
+  body: JSON.stringify(dados)
+});
+```
 
 ## Logout
 - Endpoint: `/logout` (POST).
@@ -71,6 +94,8 @@ Principais pontos:
 - Filtro custom isolado – evita lógica de autenticação em controller.
 - Busca otimizada por email (sem percorrer todos usuários).
 - Separação de responsabilidades (detalhes de segurança não misturados com lógica de negócio).
+- Navbar reutilizável via fragmentos Thymeleaf com controle de acesso condicional (`sec:authorize`).
+- Redirect pós-login para página de emergência (funcionalidade principal), não área administrativa.
 
 ## Melhorias Futuras (Sugestões)
 1. Padronizar respostas de login/logout em JSON (ex: `{ "status":"OK", "roles":["GESTOR"] }`).
@@ -80,6 +105,7 @@ Principais pontos:
 5. Adicionar camada de autorização mais granular (ex: métodos com `@PreAuthorize`).
 6. Security Headers – configurar `http.headers(...)` (CSP, X-Frame-Options, etc.).
 7. Remover `permitAll()` de `/logout` (não crítico, mas reforça intenção de permitir apenas usuários logados; POST + CSRF já protege).
+8. Implementar backend completo de acionamento de emergência com notificações em tempo real.
 
 ## Exemplo de Teste de Integração (Pseudo-código)
 ```java

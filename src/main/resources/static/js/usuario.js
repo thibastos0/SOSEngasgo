@@ -3,7 +3,15 @@ class UserManager {
     constructor() {
         this.apiUrl = "/gestao/usuarios";
         this.currentPage = window.location.pathname;
+        this.csrfToken = this.getCsrfToken();
         this.init();
+    }
+
+    getCsrfToken() {
+        // Buscar token CSRF do meta tag ou de um input hidden
+        const metaToken = document.querySelector('meta[name="_csrf"]');
+        const inputToken = document.querySelector('input[name="_csrf"]');
+        return metaToken?.content || inputToken?.value || '';
     }
 
     init() {
@@ -318,7 +326,10 @@ class UserManager {
                 // Atualizar
                 response = await fetch(`${this.apiUrl}/${userId}`, {
                     method: "PUT",
-                    headers: { "Content-Type": "application/json" },
+                    headers: { 
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": this.csrfToken
+                    },
                     body: JSON.stringify(usuario)
                 });
             } else {
@@ -331,7 +342,10 @@ class UserManager {
                 
                 response = await fetch(`${this.apiUrl}/salvar`, {
                     method: "POST",
-                    headers: { "Content-Type": "application/json" },
+                    headers: { 
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": this.csrfToken
+                    },
                     body: JSON.stringify(usuario)
                 });
             }
@@ -362,7 +376,10 @@ class UserManager {
 
         try {
             const response = await fetch(`${this.apiUrl}/${id}`, { 
-                method: "DELETE" 
+                method: "DELETE",
+                headers: {
+                    "X-CSRF-TOKEN": this.csrfToken
+                }
             });
 
             if (!response.ok) {

@@ -29,9 +29,9 @@ function Autenticar(event) {
           // Autenticação bem-sucedida
           erro.innerHTML = '<i class="bi bi-check-circle-fill me-2"></i>Login realizado com sucesso!';
           erro.className = 'text-success small';
-          // Redirecionar para dashboard (SecurityContext já foi setado pelo backend)
+          // Redirecionar para página de emergência (SecurityContext já foi setado pelo backend)
           setTimeout(() => {
-            window.location.href = '/gestao/dashboard';
+            window.location.href = '/emergencia';
           }, 500);
         } else {
           // Falha na autenticação (401 ou outro erro)

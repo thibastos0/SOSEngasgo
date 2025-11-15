@@ -55,19 +55,25 @@ public class WebConfig  {
                     "/js/**",                   // Permitir acesso aos JS (exceto os de gestão)
                     "/webjars/**"               // Permitir acesso aos webjars
                 ).permitAll()
-                .requestMatchers("/gestao/**").hasRole("GESTOR")// Proteger todas as rotas /gestao
+                .requestMatchers("/gestao/**").hasRole("GESTOR") // Proteger todas as rotas /gestao
                 .anyRequest().authenticated() // qualquer outra pessoa precisa estar logado
             )
             .formLogin(login -> login
                 .loginPage("/login") // Página de login personalizada
                 .loginProcessingUrl("/autenticacao/form-login") // Endpoint para form padrão (não usado, login é via JSON custom)
-                .defaultSuccessUrl("/gestao/dashboard", true) // Redirecionar após login bem-sucedido
+                .defaultSuccessUrl("/emergencia", true) // Redirecionar após login para página de emergência
                 .permitAll()
             )
             .logout(logout -> logout
                 .logoutUrl("/logout") // Endpoint de logout
                 .logoutSuccessUrl("/login?logout=true") // Redirecionar após logout
                 .permitAll()
+            )
+            .exceptionHandling(exceptions -> exceptions
+                .accessDeniedHandler((request, response, accessDeniedException) -> {
+                    // Redirecionar para /emergencia se usuário autenticado não tiver role necessária
+                    response.sendRedirect("/emergencia");
+                })
             );
 
         // Filtro de autenticação JSON para /autenticacao
