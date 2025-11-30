@@ -1,0 +1,31 @@
+name: Teste_SOSEngasgo
+on:
+  workflow_dispatch: #executado manualmente
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  accessibility_scanner_Site:
+    name: teste AI Acessibilidade
+    runs-on: ubuntu-latest
+    steps:
+    - name: accessibility-scanner
+      uses: github/accessibility-scanner@v2
+      with:
+        urls: |
+          https://sosengasgo.onrender.com/
+          https://sosengasgo.onrender.com/login
+          https://sosengasgo.onrender.com/emergencia
+          https://sosengasgo.onrender.com/gestao/dashboard
+          https://sosengasgo.onrender.com/gestao/usuarios
+          https://sosengasgo.onrender.com/gestao/usuarios/novo
+        repository: thibastos0/SOSEngasgo # Provide a repository name-with-owner (in the format "primer/primer-docs"). This is where issues will be filed and where Copilot will open PRs; more information below.
+        token: ${{ secrets.GITHUB_TOKEN }} # This token must have write access to the repo above (contents, issues, and PRs); more information below. Note: GitHub Actions' GITHUB_TOKEN cannot be used here.        
+        cache_key: cached_results-sosengasgo.style-main.json # ${{ steps.generate_cache_key_outputs.cache_key }} # Provide a filename that will be used when caching results. We recommend including the name or domain of the site being scanned.
+        login_url: https://sosengasgo.onrender.com/login # Optional: URL of the login page if authentication is required
+        username: thiago@mail.com # Optional: Username for authentication
+        password: ${{ secrets.PASSWORD }} # Optional: Password for authentication (use secrets!)
+        # auth_context: # Optional: Stringified JSON object for complex authentication
+        # skip_copilot_assignment: false # Optional: Set to true to skip assigning issues to GitHub Copilot (or if you don't have GitHub Copilot)
