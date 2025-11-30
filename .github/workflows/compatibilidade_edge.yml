@@ -43,6 +43,7 @@ jobs:
         run: npm install
         working-directory: cypress
 
+      # Rodar Cypress no Microsoft Edge
       - name: Cypress info (Edge)
         uses: cypress-io/github-action@v6
         with:
@@ -52,10 +53,4 @@ jobs:
           # build: npm run info
           working-directory: cypress
           browser: edge
-
-      # Rodar Cypress no Microsoft Edge
-      - name: Rodar Cypress (Edge)
-        uses: cypress-io/github-action@v6
-        with:
-          working-directory: cypress
-          browser: edge
+          config-file: cypress.config.js
