@@ -7,18 +7,55 @@ on:
   workflow_dispatch:
 
 jobs:
-  teste_edge:
+  cypress_teste_edge:
     runs-on: ubuntu-latest
+    
     steps:
       - name: Checkout
         uses: actions/checkout@v5
+        
+      # Instalar JDK 17 (ou sua versão)
+      - name: Instalar Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
 
-      - name: Cypress info
+      # Build backend
+      - name: Build do Spring Boot
+        run: ./mvnw clean package -DskipTests
+
+      # Iniciar backend
+      - name: Iniciar servidor Spring Boot
+        run: |
+          nohup java -jar target/*.jar &
+          sleep 20
+      # ↑ dá tempo para a API subir
+
+      # Instalar Node
+      - name: Instalar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Instalar dependências do Cypress
+      - name: Instalar dependências do Cypress
+        run: npm install
+        working-directory: cypress
+
+      - name: Cypress info (Edge)
         uses: cypress-io/github-action@v6
         with:
           # just for full picture after installing Cypress
           # print information about detected browsers, etc
           # see https://on.cypress.io/command-line#cypress-info
-          build: npm run info
-          working-directory: examples/browser
+          # build: npm run info
+          working-directory: cypress
+          browser: edge
+
+      # Rodar Cypress no Microsoft Edge
+      - name: Rodar Cypress (Edge)
+        uses: cypress-io/github-action@v6
+        with:
+          working-directory: cypress
           browser: edge
