@@ -13,8 +13,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
 
-      # Rodar Cypress no Microsoft Edge contra site hospedado
-      - name: Rodar Cypress (Edge)
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run Cypress (Edge)
         uses: cypress-io/github-action@v6
         with:
           # just for full picture after installing Cypress
@@ -24,3 +28,4 @@ jobs:
           working-directory: cypress
           browser: edge
           config-file: cypress.config.js
+          install-command: npm install
