@@ -1,5 +1,8 @@
 package com.example.SOSEngasgo;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -20,6 +23,15 @@ public class SosEngasgoApplication {
                 .ignoreIfMissing()       // evita erro quando o .env não existir (Render)
                 .load();
 
+        Map<String, Object> props = new HashMap<>();
+
+        dotenv.entries().forEach(entry -> {
+            String key = entry.getKey();
+            String value = entry.getValue();
+            props.put(key, value);
+            //System.out.println("✅ " + key + " carregada via .env");
+        });
+
         String mongoUri = dotenv.get("MONGODB_URI");
 
         if (mongoUri != null) {
@@ -29,7 +41,10 @@ public class SosEngasgoApplication {
             System.out.println("⚠️ MONGODB_URI não encontrada no .env — usando variável do Render");
         }
 
-		SpringApplication.run(SosEngasgoApplication.class, args);
+		//SpringApplication.run(SosEngasgoApplication.class);
+        SpringApplication app = new SpringApplication(SosEngasgoApplication.class);
+        app.setDefaultProperties(props);
+        app.run(args);
 	}
 
 }

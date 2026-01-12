@@ -1,0 +1,41 @@
+:root {
+  --panel-radius: 14px;
+}
+
+.assist-container {
+  max-width: 1400px;
+}
+
+.messages-panel {
+  border-radius: var(--panel-radius);
+}
+
+.media-panel {
+  border-radius: var(--panel-radius);
+}
+
+#messagesScroll {
+  max-height: 50vh;
+}
+
+.media-stage {
+  background: #0b1b2b;
+  min-height: 45vh;
+}
+
+#mediaContainer img,
+#mediaContainer video {
+  max-width: 100%;
+  max-height: 70vh;
+  object-fit: contain;
+  background: #000;
+}
+
+.media-controls button {
+  min-width: 3rem;
+}
+
+@media (min-width: 992px) {
+  #messagesScroll { max-height: 70vh; }
+  .media-stage { min-height: 70vh; }
+}

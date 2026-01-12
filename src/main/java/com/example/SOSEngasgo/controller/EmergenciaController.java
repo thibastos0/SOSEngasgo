@@ -16,4 +16,9 @@ public class EmergenciaController {
     public String emergencia() {
         return "emergencia";
     }
+
+    @GetMapping("/acao")
+    public String emergenciaAcao() {
+        return "emergencia/acao";
+    }
 }

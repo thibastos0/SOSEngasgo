@@ -17,29 +17,7 @@
     emergencyBtn.style.opacity = '0.6';
     emergencyBtn.style.cursor = 'not-allowed';
     
-    // TODO: Implementar chamada à API de acionamento
-    // fetch('/api/emergencia/acionar', { 
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   credentials: 'same-origin',
-    //   body: JSON.stringify({ timestamp: new Date().toISOString() })
-    // })
-    // .then(response => response.json())
-    // .then(data => {
-    //   alert('✓ Emergência acionada com sucesso! Ajuda está a caminho.');
-    // })
-    // .catch(err => {
-    //   console.error('Erro ao acionar emergência:', err);
-    //   alert('✗ Erro ao acionar emergência. Tente novamente.');
-    //   emergencyBtn.disabled = false;
-    //   emergencyBtn.style.opacity = '1';
-    //   emergencyBtn.style.cursor = 'pointer';
-    // });
-    
-    // Placeholder: simular sucesso imediato
-    alert('✓ Emergência acionada com sucesso!\n\nAjuda está a caminho.');
-    emergencyBtn.disabled = false;
-    emergencyBtn.style.opacity = '1';
-    emergencyBtn.style.cursor = 'pointer';
+    // Redirecionar para a página de atendimento/ação
+    window.location.assign('/emergencia/acao');
   });
 })();

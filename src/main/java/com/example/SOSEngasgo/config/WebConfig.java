@@ -42,7 +42,9 @@ public class WebConfig  {
         http
             // Permite que mudanças no SecurityContext sejam salvas automaticamente (comportamento legado)
             .securityContext(securityContext -> securityContext.requireExplicitSave(false))
-            .csrf(csrf -> csrf.ignoringRequestMatchers("/autenticacao/**"))
+            .csrf(csrf -> csrf.ignoringRequestMatchers("/autenticacao/**",
+            "/telegram/webhook"
+            ))// Desabilita CSRF para endpoints específicos
             .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers(
                     "/autenticacao/**",         // Permitir acesso ao endpoint de login
@@ -53,7 +55,8 @@ public class WebConfig  {
                     "/index.html",              // Permitir acesso à página inicial
                     "/css/**",                  // Permitir acesso aos CSS
                     "/js/**",                   // Permitir acesso aos JS (exceto os de gestão)
-                    "/webjars/**"               // Permitir acesso aos webjars
+                    "/webjars/**",               // Permitir acesso aos webjars
+                    "/telegram/webhook"         // Permitir acesso ao webhook do Telegram
                 ).permitAll()
                 .requestMatchers("/gestao/**").hasRole("GESTOR") // Proteger todas as rotas /gestao
                 .anyRequest().authenticated() // qualquer outra pessoa precisa estar logado

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Atendimento de Emergência - SOSEngasgo</title>
+
+    <!-- Bootstrap & Icons -->
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/webjars/font-awesome/css/all.min.css}" rel="stylesheet">
+
+    <!-- Project CSS -->
+    <link th:href="@{/css/styles.css}" rel="stylesheet">
+    <link th:href="@{/css/emergencia.css}" rel="stylesheet">
+    <link th:href="@{/css/emergencia-acao.css}" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <main class="container-fluid assist-container py-3">
+        <div class="row g-3">
+            <!-- Messages panel -->
+            <section class="col-12 col-lg-4">
+                <div class="card h-100 messages-panel">
+                    <div class="card-header d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-comments"></i>
+                        <span>Mensagens recebidas</span>
+                    </div>
+                    <div class="card-body p-2 overflow-auto" id="messagesScroll">
+                        <ul class="list-group list-group-flush" id="messagesList" aria-live="polite" aria-relevant="additions">
+                            <!-- Mensagens serão inseridas via JS -->
+                        </ul>
+                    </div>
+                    <div class="card-footer small text-muted">
+                        Origem: Webhook (Telegram) — integração futura
+                    </div>
+                </div>
+            </section>
+
+            <!-- Media (GIF/Video) panel -->
+            <section class="col-12 col-lg-8">
+                <div class="card h-100 media-panel">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="fa-solid fa-person-breastfeeding"></i>
+                            <span>Manobras de desengasgo</span>
+                        </div>
+                        <button class="btn btn-outline-danger btn-sm" id="encerrarBtn">
+                            <i class="fa-solid fa-xmark"></i>
+                            Encerrar
+                        </button>
+                    </div>
+
+                    <div class="card-body p-0 d-flex flex-column">
+                        <div class="media-stage flex-grow-1 d-flex align-items-center justify-content-center">
+                            <!-- Elemento dinâmico: <img> ou <video> será inserido aqui pelo JS -->
+                            <div id="mediaContainer" class="w-100 h-100 d-flex align-items-center justify-content-center"></div>
+                        </div>
+
+                        <div class="media-controls d-flex align-items-center justify-content-center gap-2 p-2 border-top">
+                            <button class="btn btn-secondary" id="prevBtn" title="Anterior">
+                                <i class="fa-solid fa-backward"></i>
+                            </button>
+                            <button class="btn btn-primary" id="playPauseBtn" title="Reproduzir/Pausar">
+                                <i class="fa-solid fa-play"></i>
+                            </button>
+                            <button class="btn btn-secondary" id="nextBtn" title="Próximo">
+                                <i class="fa-solid fa-forward"></i>
+                            </button>
+                        </div>
+
+                        <div class="px-3 py-2 small text-muted">
+                            Dica: para controle preciso (play/pause), considere armazenar os conteúdos como vídeos (MP4/WebM) além de GIF.
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- JS -->
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script th:src="@{/webjars/popperjs__core/dist/umd/popper.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/js/emergencia-acao.js}"></script>
+</body>
+</html>
