@@ -21,15 +21,21 @@ public class TelegramService {
 
     public void processUpdate(String body) {
 
+        System.out.println("Recebido update do Telegram: " + body);
+
         try {
             Update update = objectMapper.readValue(body, Update.class);
             // Processa o update conforme necessário
 
             if (update.message() == null || update.message().text() == null) {
+                System.out.println("Update sem mensagem de texto, ignorando.");
                 return;
             }
             String messageText = update.message().text();
             Long chatId = update.message().chat().id();
+
+            System.out.println("Mensagem recebida: " + messageText + " do chatId: " + chatId);
+
             if ("/start".equals(messageText.trim())) {
                 telegramBot.execute(
                     new SendMessage(chatId, "SOSEngasgo iniciado com sucesso.")
