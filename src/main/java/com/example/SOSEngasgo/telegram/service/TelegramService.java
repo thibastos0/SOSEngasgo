@@ -3,6 +3,7 @@ package com.example.SOSEngasgo.telegram.service;
 import org.springframework.stereotype.Service;
 
 import com.example.SOSEngasgo.config.TelegramBotConfig;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
@@ -13,6 +14,7 @@ public class TelegramService {
 
     private final TelegramBot telegramBot;
     private final TelegramBotConfig telegramBotConfig;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     public TelegramService(
             TelegramBot telegramBot,
@@ -21,18 +23,23 @@ public class TelegramService {
         this.telegramBotConfig = telegramBotConfig;
     }
 
-    public void processUpdate(Update update) {
+    public void processUpdate(String body) {
 
-        if (update.message() == null || update.message().text() == null) {
-            return;
-        }
+        try {
+            Update update = objectMapper.readValue(body, Update.class);
+            // Processa o update conforme necessário
 
-        String text = update.message().text();
-
-        if ("/start".equals(text)) {
-            telegramBot.execute(
-                new SendMessage(telegramBotConfig.getUserChatId(), "SOSEngasgo iniciado com sucesso.")
-            );
+            if (update.message() == null || update.message().text() == null) {
+                return;
+            }
+            String messageText = update.message().text();
+            if ("/start".equals(messageText.trim())) {
+                telegramBot.execute(
+                    new SendMessage(telegramBotConfig.getUserChatId(), "SOSEngasgo iniciado com sucesso.")
+                );
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

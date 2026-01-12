@@ -32,6 +32,7 @@ public class SosEngasgoApplication {
             //System.out.println("✅ " + key + " carregada via .env");
         });
 
+        // Verifica especificamente pela variável MONGODB_URI, se está comentada no .env
         String mongoUri = dotenv.get("MONGODB_URI");
 
         if (mongoUri != null) {
