@@ -2,6 +2,7 @@ package com.example.SOSEngasgo.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -37,14 +38,29 @@ public class WebConfig  {
     }
 
     @Bean
+    @Order(1)
+    public SecurityFilterChain telegramSecurity(HttpSecurity http) throws Exception {
+
+        http
+            .securityMatcher("/telegram/**")
+            .csrf(csrf -> csrf.disable())
+            .authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
+            .sessionManagement(session -> session.disable())
+            .formLogin(form -> form.disable())
+            .logout(logout -> logout.disable());
+
+        return http.build();
+    }
+
+
+    @Bean
+    @Order(2)
     public SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
 
         http
             // Permite que mudanças no SecurityContext sejam salvas automaticamente (comportamento legado)
             .securityContext(securityContext -> securityContext.requireExplicitSave(false))
-            .csrf(csrf -> csrf.ignoringRequestMatchers("/autenticacao/**",
-            "/telegram/webhook"
-            ))// Desabilita CSRF para endpoints específicos
+            .csrf(csrf -> csrf.ignoringRequestMatchers("/autenticacao/**"))// Desabilita CSRF para endpoints específicos
             .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers(
                     "/autenticacao/**",         // Permitir acesso ao endpoint de login
@@ -55,8 +71,7 @@ public class WebConfig  {
                     "/index.html",              // Permitir acesso à página inicial
                     "/css/**",                  // Permitir acesso aos CSS
                     "/js/**",                   // Permitir acesso aos JS (exceto os de gestão)
-                    "/webjars/**",               // Permitir acesso aos webjars
-                    "/telegram/webhook"         // Permitir acesso ao webhook do Telegram
+                    "/webjars/**"               // Permitir acesso aos webjars
                 ).permitAll()
                 .requestMatchers("/gestao/**").hasRole("GESTOR") // Proteger todas as rotas /gestao
                 .anyRequest().authenticated() // qualquer outra pessoa precisa estar logado
