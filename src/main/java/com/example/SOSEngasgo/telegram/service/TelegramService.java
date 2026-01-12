@@ -35,7 +35,7 @@ public class TelegramService {
             String messageText = update.message().text();
             if ("/start".equals(messageText.trim())) {
                 telegramBot.execute(
-                    new SendMessage(telegramBotConfig.getUserChatId(), "SOSEngasgo iniciado com sucesso.")
+                    new SendMessage(telegramBotConfig.getGroupChatId(), "SOSEngasgo iniciado com sucesso.")
                 );
             }
         } catch (Exception e) {

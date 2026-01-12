@@ -3,7 +3,7 @@ package com.example.SOSEngasgo.telegram.controller;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.SOSEngasgo.telegram.service.TelegramService;
-import com.pengrad.telegrambot.model.Update;
+//import com.pengrad.telegrambot.model.Update;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
