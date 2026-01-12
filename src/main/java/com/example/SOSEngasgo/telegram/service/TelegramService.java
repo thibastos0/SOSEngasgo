@@ -2,7 +2,6 @@ package com.example.SOSEngasgo.telegram.service;
 
 import org.springframework.stereotype.Service;
 
-import com.example.SOSEngasgo.config.TelegramBotConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.model.Update;
@@ -13,14 +12,11 @@ import com.pengrad.telegrambot.request.SendMessage;
 public class TelegramService {
 
     private final TelegramBot telegramBot;
-    private final TelegramBotConfig telegramBotConfig;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     public TelegramService(
-            TelegramBot telegramBot,
-            TelegramBotConfig telegramBotConfig) {
+            TelegramBot telegramBot) {
         this.telegramBot = telegramBot;
-        this.telegramBotConfig = telegramBotConfig;
     }
 
     public void processUpdate(String body) {
@@ -33,9 +29,10 @@ public class TelegramService {
                 return;
             }
             String messageText = update.message().text();
+            Long chatId = update.message().chat().id();
             if ("/start".equals(messageText.trim())) {
                 telegramBot.execute(
-                    new SendMessage(telegramBotConfig.getGroupChatId(), "SOSEngasgo iniciado com sucesso.")
+                    new SendMessage(chatId, "SOSEngasgo iniciado com sucesso.")
                 );
             }
         } catch (Exception e) {
