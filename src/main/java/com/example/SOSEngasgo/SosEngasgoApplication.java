@@ -3,8 +3,13 @@ package com.example.SOSEngasgo;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+
+import com.pengrad.telegrambot.TelegramBot;
+import com.pengrad.telegrambot.request.SendMessage;
 
 import io.github.cdimascio.dotenv.Dotenv;
 
@@ -47,5 +52,27 @@ public class SosEngasgoApplication {
         app.setDefaultProperties(props);
         app.run(args);
 	}
+
+    @Bean
+    CommandLineRunner testTelegram(TelegramBot telegramBot) {
+        return args -> {
+
+            if (telegramBot == null) {
+                System.out.println("❌ TelegramBot bean é nulo!");
+                return;
+            }
+            
+            System.out.println("TelegramBot bean criado com sucesso: " + (telegramBot != null));
+
+            System.out.println("🚀 Testando envio direto ao Telegram...");
+
+            telegramBot.execute(
+                new SendMessage(7887550884L, "Teste direto ao subir a aplicação (SOSEngasgo)")
+            );
+
+            System.out.println("✅ Comando de envio executado");
+        };
+    }
+
 
 }
