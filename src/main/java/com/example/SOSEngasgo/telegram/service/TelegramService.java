@@ -1,6 +1,6 @@
 package com.example.SOSEngasgo.telegram.service;
 
-import org.springframework.scheduling.annotation.Async;
+//import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,8 +20,7 @@ public class TelegramService {
         this.telegramBot = telegramBot;
     }
 
-    @Async
-    public void processUpdateAsync(String body) {
+    public void processUpdate(String body) {
 
         try {
             Update update = objectMapper.readValue(body, Update.class);
@@ -30,10 +29,10 @@ public class TelegramService {
             if (update.message() == null || update.message().text() == null) {
                 return;
             }
-            String messageText = update.message().text();
+            String messageText = update.message().text().trim();
             Long chatId = update.message().chat().id();
 
-            if ("/start".equals(messageText.trim())) {
+            if ("/start".equals(messageText)) {
                 telegramBot.execute(
                     new SendMessage(chatId, "SOSEngasgo iniciado com sucesso.")
                 );
