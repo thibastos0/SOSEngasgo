@@ -52,7 +52,7 @@ public class SosEngasgoApplication {
         app.setDefaultProperties(props);
         app.run(args);
 	}
-
+/*
     @Bean
     CommandLineRunner testTelegram(TelegramBot telegramBot) {
         return args -> {
@@ -61,7 +61,7 @@ public class SosEngasgoApplication {
                 System.out.println("❌ TelegramBot bean é nulo!");
                 return;
             }
-            
+
             System.out.println("TelegramBot bean criado com sucesso: " + (telegramBot != null));
 
             System.out.println("🚀 Testando envio direto ao Telegram...");
@@ -72,7 +72,7 @@ public class SosEngasgoApplication {
 
             System.out.println("✅ Comando de envio executado");
         };
-    }
+    }*/
 
 
 }
