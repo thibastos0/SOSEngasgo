@@ -25,10 +25,10 @@ public class TelegramService {
         try {
             Update update = objectMapper.readValue(body, Update.class);
             // Processa o update conforme necessário
-
+/*
             if (update.message() == null || update.message().text() == null) {
                 return;
-            }
+            }*/
             String messageText = update.message().text().trim();
             Long chatId = update.message().chat().id();
 
