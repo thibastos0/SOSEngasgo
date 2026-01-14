@@ -32,7 +32,7 @@ public class TelegramService {
             String messageText = update.message().text().trim();
             Long chatId = update.message().chat().id();
 
-            if ("/start".equals(messageText)) {
+            if (messageText.startsWith("/start")) {
                 telegramBot.execute(
                     new SendMessage(chatId, "SOSEngasgo iniciado com sucesso.")
                 );
