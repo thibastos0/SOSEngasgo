@@ -36,12 +36,12 @@ public class TelegramService {
                 telegramBot.execute(
                     new SendMessage(chatId, "SOSEngasgo iniciado com sucesso.")
                 );
-            
+            }
             telegramBot.execute(
                 new SendMessage(chatId, "Webhook ativo. Mensagem recebida: " + messageText)
             );
 
-            }
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
