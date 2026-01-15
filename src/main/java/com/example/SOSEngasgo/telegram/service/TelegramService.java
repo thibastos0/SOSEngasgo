@@ -25,36 +25,27 @@ public class TelegramService {
         try {
             Update update = objectMapper.readValue(body, Update.class);
             // Processa o update conforme necessário
-/*
+
             if (update.message() == null || update.message().text() == null) {
                 return;
             }
 
             String messageText = update.message().text().trim();
-            Long chatId = update.message().chat().id();
+            //Long chatId = update.message().chat().id();
 
+            Long chatId = update.message().from().id();
+            
+            
             if (messageText.startsWith("/start")) {
                 telegramBot.execute(
                     new SendMessage(chatId, "SOSEngasgo iniciado com sucesso.")
                 );
             }
+
             telegramBot.execute(
                 new SendMessage(chatId, "Webhook ativo. Mensagem recebida: " + messageText)
-            );*/
+            );
 
-            Long chatId = null;
-
-            if (update.message() != null) {
-                chatId = update.message().chat().id();
-            } else if (update.editedMessage() != null) {
-                chatId = update.editedMessage().chat().id();
-            }
-
-            if (chatId != null) {
-                telegramBot.execute(
-                    new SendMessage(chatId, "Webhook ativo. Update recebido.")
-                );
-            }
 
             
         } catch (Exception e) {
