@@ -23,12 +23,11 @@ public class TelegramWebhookController {
     }
 
     @PostMapping("/webhook")
-    public ResponseEntity<Void> onUpdateReceived(@RequestBody String body) {
+    public ResponseEntity<String> onUpdateReceived(@RequestBody String body) {
         
-        System.out.println("Received update: " + body);
         telegramService.processUpdate(body);
-        return ResponseEntity.ok().build();
-        //return ResponseEntity.ok("Webhook recebido com sucesso.");
+        //return ResponseEntity.ok().build();
+        return ResponseEntity.ok("Webhook recebido com sucesso." + body);
     }
     
 
