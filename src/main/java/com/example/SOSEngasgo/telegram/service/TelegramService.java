@@ -28,7 +28,8 @@ public class TelegramService {
 /*
             if (update.message() == null || update.message().text() == null) {
                 return;
-            }*/
+            }
+
             String messageText = update.message().text().trim();
             Long chatId = update.message().chat().id();
 
@@ -39,7 +40,21 @@ public class TelegramService {
             }
             telegramBot.execute(
                 new SendMessage(chatId, "Webhook ativo. Mensagem recebida: " + messageText)
-            );
+            );*/
+
+            Long chatId = null;
+
+            if (update.message() != null) {
+                chatId = update.message().chat().id();
+            } else if (update.editedMessage() != null) {
+                chatId = update.editedMessage().chat().id();
+            }
+
+            if (chatId != null) {
+                telegramBot.execute(
+                    new SendMessage(chatId, "Webhook ativo. Update recebido.")
+                );
+            }
 
             
         } catch (Exception e) {
