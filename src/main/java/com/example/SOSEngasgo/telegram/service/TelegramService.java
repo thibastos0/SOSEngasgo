@@ -3,7 +3,7 @@ package com.example.SOSEngasgo.telegram.service;
 //import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
@@ -13,7 +13,7 @@ import com.pengrad.telegrambot.request.SendMessage;
 public class TelegramService {
 
     private final TelegramBot telegramBot;
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final Gson gson = new Gson();
 
     public TelegramService(
             TelegramBot telegramBot) {
@@ -23,7 +23,7 @@ public class TelegramService {
     public void processUpdate(String body) {
 
         try {
-            Update update = objectMapper.readValue(body, Update.class);
+            Update update = gson.fromJson(body, Update.class);
             // Processa o update conforme necessário
 
             if (update.message() == null || update.message().text() == null) {
