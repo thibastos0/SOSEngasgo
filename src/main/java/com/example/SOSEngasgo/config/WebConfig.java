@@ -64,7 +64,10 @@ public class WebConfig  {
             .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers(
                     "/autenticacao/**",         // Permitir acesso ao endpoint de login
-                    
+                    "/swagger-ui.html",           // Permitir acesso ao Swagger UI
+                    "/swagger-ui/**",             // Permitir acesso aos recursos do Swagger UI
+                    "/v3/api-docs",               // OpenAPI JSON
+                    "/v3/api-docs/**",            // OpenAPI resources
                     "/logout",                  // Permitir acesso ao logout
                     "/login",                   // Permitir acesso à página de login
                     "/",                        // Permitir acesso à página inicial

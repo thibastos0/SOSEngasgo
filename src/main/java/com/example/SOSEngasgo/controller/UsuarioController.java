@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import com.example.SOSEngasgo.model.Usuario;
 import com.example.SOSEngasgo.service.UsuarioService;
-import org.springframework.web.bind.annotation.GetMapping;
 
+import org.springframework.web.bind.annotation.GetMapping;
 
 @RestController
 @RequestMapping("/gestao/usuarios")
