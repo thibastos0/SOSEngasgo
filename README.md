@@ -1,6 +1,18 @@
-# SOSEngasgo
+# 🚑 SOS Engasgo (Backend Spring Boot)
 
-Projeto Integrador (3º semestre) – Aplicação Spring Boot para gestão e suporte a eventos de engasgo em ambiente escolar.
+> **Status do Projeto:** ✅ Estável / Integrado  
+> API desenvolvida para fornecer o gerenciamento de dados e regras de negócio do ecossistema SOS Engasgo.
+
+![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
+![Spring](https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=spring&logoColor=white)
+![Maven](https://img.shields.io/badge/Maven-C71A36?style=for-the-badge&logo=apache-maven&logoColor=white)
+
+---
+
+## 📋 Sobre o Projeto
+O **SOS Engasgo** (Spring Edition) é um projeto acadêmico desenvolvido para a **Fatec Indaiatuba**. Este repositório contém o backend robusto responsável por servir dados às interfaces (Web/Mobile), garantindo segurança e escalabilidade.rojeto Integrador (3º semestre) – Aplicação Spring Boot para gestão e suporte a eventos de engasgo em ambiente escolar.
+
+---
 
 ## Sumário
 - [Visão Geral](#visão-geral)
