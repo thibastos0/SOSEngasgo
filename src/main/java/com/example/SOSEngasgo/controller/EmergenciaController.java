@@ -38,7 +38,7 @@ public class EmergenciaController {
     @PostMapping("/api/emergencia/acionar")
     public ResponseEntity<?> acionar(Authentication auth) {
         String nome = auth.getName();
-        telegramService.enviarAlertaEmergencia(nome, "Escola X");
+        telegramService.enviarAlertaEmergencia(nome, -23.55052, -46.633308); // Exemplo: São Paulo
         return ResponseEntity.ok(Map.of("status", "ok", "mensagem", "Emergência acionada"));
 }
 
