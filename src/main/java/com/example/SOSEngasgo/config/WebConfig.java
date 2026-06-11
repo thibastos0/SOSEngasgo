@@ -15,6 +15,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.example.SOSEngasgo.service.UsuarioDetailsService;
+import com.example.SOSEngasgo.security.FirebaseTokenFilter;
 import com.example.SOSEngasgo.security.JsonUsernamePasswordAuthFilter;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -55,6 +56,23 @@ public class WebConfig  {
 
     @Bean
     @Order(2)
+    public SecurityFilterChain apiSecurity(HttpSecurity http) throws Exception {
+        http
+            .securityMatcher("/api/**")
+            .csrf(csrf -> csrf.disable())
+            .sessionManagement(session -> session.disable())
+            .formLogin(form -> form.disable())
+            .logout(logout -> logout.disable())
+            .authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
+            .addFilterBefore(new FirebaseTokenFilter(),
+                UsernamePasswordAuthenticationFilter.class);
+
+        return http.build();
+    }
+
+
+    @Bean
+    @Order(3)
     public SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
 
         http

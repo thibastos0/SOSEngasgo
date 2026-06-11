@@ -58,16 +58,19 @@ public class TelegramService {
     }
 
 
-    public void enviarAlertaEmergencia(String nomeUsuario, String escola) {
-    String mensagem = "🚨 *EMERGÊNCIA - ENGASGO*\n"
-        + "👤 Usuário: " + nomeUsuario + "\n"
-        + "🏫 Escola: " + escola + "\n"
-        + "⏰ " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
+    public void enviarAlertaEmergencia(String emailUsuario, double latitude, double longitude) {
+        String mapLink = "https://maps.google.com/?q=" + latitude + "," + longitude;
 
-    telegramBot.execute(
-        new SendMessage(telegramBotConfig.getGroupChatId(), mensagem)
-            .parseMode(ParseMode.Markdown)
-    );
-}
+        String mensagem = "🚨 *EMERGÊNCIA - ENGASGO*\n\n"
+            + "👤 Usuário: " + emailUsuario + "\n"
+            + "📍 Localização: [Ver no Maps](" + mapLink + ")\n"
+            + "⏰ " + java.time.LocalDateTime.now()
+                .format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
+
+        telegramBot.execute(
+            new SendMessage(telegramBotConfig.getGroupChatId(), mensagem)
+                .parseMode(com.pengrad.telegrambot.model.request.ParseMode.Markdown)
+        );
+    }
 
 }

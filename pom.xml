@@ -124,6 +124,13 @@
     		<version>2.6.0</version>
 		</dependency>
 
+		<!-- Firebase Admin SDK -->
+		<dependency>
+			<groupId>com.google.firebase</groupId>
+			<artifactId>firebase-admin</artifactId>
+			<version>9.1.1</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
