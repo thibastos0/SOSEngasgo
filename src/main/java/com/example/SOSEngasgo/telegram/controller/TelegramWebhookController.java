@@ -26,8 +26,8 @@ public class TelegramWebhookController {
     public ResponseEntity<String> UpdateReceived(@RequestBody String body) {
         
         telegramService.processUpdate(body);
-        //return ResponseEntity.ok().build();
-        return ResponseEntity.ok("Webhook recebido com sucesso." + body);
+        return ResponseEntity.ok().build();
+        //return ResponseEntity.ok("Webhook recebido com sucesso." + body);
     }
     
 

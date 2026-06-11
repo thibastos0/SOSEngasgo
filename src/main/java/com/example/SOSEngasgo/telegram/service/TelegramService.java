@@ -1,11 +1,16 @@
 package com.example.SOSEngasgo.telegram.service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 //import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
+import com.example.SOSEngasgo.config.TelegramBotConfig;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.model.Update;
+import com.pengrad.telegrambot.model.request.ParseMode;
 import com.pengrad.telegrambot.request.SendMessage;
 
 @SuppressWarnings("deprecation")
@@ -13,11 +18,14 @@ import com.pengrad.telegrambot.request.SendMessage;
 public class TelegramService {
 
     private final TelegramBot telegramBot;
+    private final TelegramBotConfig telegramBotConfig;
     private final Gson gson = new Gson();
 
     public TelegramService(
-            TelegramBot telegramBot) {
+            TelegramBot telegramBot,
+            TelegramBotConfig telegramBotConfig) {
         this.telegramBot = telegramBot;
+        this.telegramBotConfig = telegramBotConfig;
     }
 
     public void processUpdate(String body) {
@@ -37,16 +45,29 @@ public class TelegramService {
                 telegramBot.execute(
                     new SendMessage(chatId, "SOSEngasgo iniciado com sucesso.")
                 );
+            } else {
+
+                telegramBot.execute(
+                    new SendMessage(chatId, "Webhook ativo. Mensagem recebida: " + messageText)
+                );
             }
-
-            telegramBot.execute(
-                new SendMessage(chatId, "Webhook ativo. Mensagem recebida: " + messageText)
-            );
-
-
-            
+          
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+
+    public void enviarAlertaEmergencia(String nomeUsuario, String escola) {
+    String mensagem = "🚨 *EMERGÊNCIA - ENGASGO*\n"
+        + "👤 Usuário: " + nomeUsuario + "\n"
+        + "🏫 Escola: " + escola + "\n"
+        + "⏰ " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
+
+    telegramBot.execute(
+        new SendMessage(telegramBotConfig.getGroupChatId(), mensagem)
+            .parseMode(ParseMode.Markdown)
+    );
+}
+
 }
