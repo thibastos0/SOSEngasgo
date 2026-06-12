@@ -1,8 +1,5 @@
 package com.example.SOSEngasgo.telegram.service;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 //import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +7,6 @@ import com.google.gson.Gson;
 import com.example.SOSEngasgo.config.TelegramBotConfig;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.model.Update;
-import com.pengrad.telegrambot.model.request.ParseMode;
 import com.pengrad.telegrambot.request.SendMessage;
 
 @SuppressWarnings("deprecation")
@@ -45,12 +41,13 @@ public class TelegramService {
                 telegramBot.execute(
                     new SendMessage(chatId, "SOSEngasgo iniciado com sucesso.")
                 );
-            } else {
+            } //eco de mensagem (para teste)
+            /*else {
 
                 telegramBot.execute(
                     new SendMessage(chatId, "Webhook ativo. Mensagem recebida: " + messageText)
                 );
-            }
+            }*/
           
         } catch (Exception e) {
             e.printStackTrace();
@@ -68,7 +65,7 @@ public class TelegramService {
                 .format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
 
         telegramBot.execute(
-            new SendMessage(telegramBotConfig.getGroupChatId(), mensagem)
+            new SendMessage(telegramBotConfig.getUserChatId(), mensagem)
                 .parseMode(com.pengrad.telegrambot.model.request.ParseMode.Markdown)
         );
     }
