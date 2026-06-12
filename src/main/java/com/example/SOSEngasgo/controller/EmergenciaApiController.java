@@ -22,15 +22,26 @@ public class EmergenciaApiController {
             @RequestBody Map<String, Double> body,
             Authentication auth) {
 
-        double latitude  = body.getOrDefault("latitude", 0.0);
-        double longitude = body.getOrDefault("longitude", 0.0);
-        String email = auth.getName(); // vem do FirebaseTokenFilter
+        try {
 
-        telegramService.enviarAlertaEmergencia(email, latitude, longitude);
+            double latitude  = body.getOrDefault("latitude", 0.0);
+            double longitude = body.getOrDefault("longitude", 0.0);
+            String email = auth.getName(); // vem do FirebaseTokenFilter
 
-        return ResponseEntity.ok(Map.of(
-            "status", "ok",
-            "mensagem", "Emergência acionada com sucesso"
-        ));
+            telegramService.enviarAlertaEmergencia(email, latitude, longitude);
+
+            return ResponseEntity.ok(Map.of(
+                "status", "ok",
+                "email", email,
+                "lat", latitude,
+                "lon", longitude,
+                "mensagem", "Emergência acionada com sucesso"
+            ));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(Map.of(
+                "status", "error",
+                "mensagem", "Erro ao acionar emergência: " + e.getMessage()
+            ));
+        }
     }
 }
