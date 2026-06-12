@@ -8,6 +8,7 @@ import com.example.SOSEngasgo.config.TelegramBotConfig;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
+import com.pengrad.telegrambot.response.SendResponse;
 
 @SuppressWarnings("deprecation")
 @Service
@@ -64,10 +65,16 @@ public class TelegramService {
             + "⏰ " + java.time.LocalDateTime.now()
                 .format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
 
-        telegramBot.execute(
+
+        SendResponse response = telegramBot.execute(
             new SendMessage(telegramBotConfig.getUserChatId(), mensagem)
                 .parseMode(com.pengrad.telegrambot.model.request.ParseMode.Markdown)
         );
+
+        if (!response.isOk()) {
+            throw new RuntimeException("Erro ao enviar mensagem para Telegram: " + response.description());
+        }
+
     }
 
 }
