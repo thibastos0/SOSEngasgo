@@ -20,29 +20,29 @@ public class FirebaseConfig {
 
             InputStream stream = null;
 
-            // 1. Tenta Secret File do Render
-            java.io.File secretFile = new java.io.File("/etc/secrets/firebase-service-account.json");
-            if (secretFile.exists()) {
-                stream = new java.io.FileInputStream(secretFile);
+            // 1. Base64 via variável de ambiente (Railway/Render)
+            String base64 = System.getenv("FIREBASE_CREDENTIALS_BASE64");
+            if (base64 != null && !base64.isBlank()) {
+                byte[] decoded = java.util.Base64.getDecoder().decode(base64.trim());
+                stream = new ByteArrayInputStream(decoded);
             }
 
-            // 2. Tenta variável de ambiente Base64 (Railway)
+            // 2. Secret File do Render
             if (stream == null) {
-                String base64 = System.getenv("FIREBASE_CREDENTIALS_BASE64");
-                if (base64 != null && !base64.isBlank()) {
-                    byte[] decoded = java.util.Base64.getDecoder().decode(base64.trim());
-                    stream = new ByteArrayInputStream(decoded);
+                java.io.File secretFile = new java.io.File("/etc/secrets/firebase-service-account.json");
+                if (secretFile.exists()) {
+                    stream = new java.io.FileInputStream(secretFile);
                 }
             }
 
-            // 3. Tenta classpath (desenvolvimento local)
+            // 3. Classpath local (desenvolvimento)
             if (stream == null) {
                 stream = getClass().getClassLoader()
                     .getResourceAsStream("firebase-service-account.json");
             }
 
             if (stream == null) {
-                throw new IllegalStateException("firebase-service-account.json não encontrado!");
+                throw new IllegalStateException("Firebase credentials não encontradas!");
             }
 
             FirebaseOptions options = FirebaseOptions.builder()
